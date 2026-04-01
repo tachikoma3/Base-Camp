@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./CSS/Style.css" />
+
+  <title>BASECAMP — Outdoor Gear</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <div class="cursor" id="js-cursor"></div>
+  <div class="cursor-ring" id="js-cursor-ring"></div>
+  <div class="bg-layer"></div>
+  <div class="progress-bar" id="js-progress"></div>
+  <nav class="section-indicator" id="js-dots"></nav>
+
+  <!-- =====================================================
+    .pin-wrapper … GSAPにピン留めされる枠（動かない）
+      └── .page-track … GSAPが横に動かすレール
+  ===================================================== -->
+  <div class="pin-wrapper" id="js-pin">
+    <div class="page-track" id="js-track">
+
+      <section class="panel panel--hero">
+        <div class="hero__logo">BASECAMP GEAR STORE</div>
+        <div><h1 class="hero__headline">BASE CAMP</h1></div>
+        <div>
+          <p class="hero__sub">道具が、旅を語る。<br>荒野へ出る準備を、ここから。</p>
+          <div class="hero__scroll-hint"><span></span>SCROLL TO EXPLORE</div>
+        </div>
+      </section>
+
+      <section class="panel panel--concept">
+        <p class="panel__label">01 / CONCEPT</p>
+        <h2 class="panel__title">BUILT TO LAST</h2>
+        <div class="divider"></div>
+        <p class="panel__body">量より質。<br>一生使える道具だけを、<br>厳選してお届けする。<br><br>自然の中で本当に頼れる<br>ギアだけが、ここにある。</p>
+      </section>
+
+      <section class="panel panel--gear">
+        <p class="gear__num">— 01</p>
+        <span class="gear__icon">⛺</span>
+        <p class="gear__category">SHELTER</p>
+        <h3 class="gear__name">NORDISK<br>ASGARD</h3>
+        <p class="gear__desc">コットン混紡の逸品。<br>結露知らずの四季対応テント。</p>
+      </section>
+
+      <section class="panel panel--gear">
+        <p class="gear__num">— 02</p>
+        <span class="gear__icon">🔥</span>
+        <p class="gear__category">FIRE</p>
+        <h3 class="gear__name">PETROMAX<br>FIRE BOWL</h3>
+        <p class="gear__desc">鋳鉄の重厚感。<br>安定した燃焼と圧倒的な存在感。</p>
+      </section>
+
+      <section class="panel panel--gear">
+        <p class="gear__num">— 03</p>
+        <span class="gear__icon">🏮</span>
+        <p class="gear__category">LANTERN</p>
+        <h3 class="gear__name">FEUERHAND<br>BABY 276</h3>
+        <p class="gear__desc">130年続く灯油ランタン。<br>炎が夜の静寂を照らす。</p>
+      </section>
+
+      <section class="panel panel--gear">
+        <p class="gear__num">— 04</p>
+        <span class="gear__icon">🪓</span>
+        <p class="gear__category">TOOL</p>
+        <h3 class="gear__name">GRANSFORS<br>FOREST AXE</h3>
+        <p class="gear__desc">職人が一本鍛造する斧。<br>一生もの、という言葉が似合う。</p>
+      </section>
+
+      <section class="panel panel--night">
+        <div class="night__tag"><div class="night__dot"></div>NIGHT MODE</div>
+        <h2 class="night__big">DARK  SKIES AWAIT</h2>
+        <p class="panel__body">夜が深まるほど、<br>焚き火の価値が上がる。<br>満天の星空の下で、<br>道具の本質が見えてくる。</p>
+        <div class="night__stat-grid">
+          <div class="night__stat"><div class="night__stat-num">300+</div><div class="night__stat-label">厳選アイテム</div></div>
+          <div class="night__stat"><div class="night__stat-num">12yr</div><div class="night__stat-label">キュレーション歴</div></div>
+          <div class="night__stat"><div class="night__stat-num">40+</div><div class="night__stat-label">取り扱いブランド</div></div>
+          <div class="night__stat"><div class="night__stat-num">∞</div><div class="night__stat-label">野営の記憶</div></div>
+        </div>
+      </section>
+
+      <section class="panel panel--cta">
+        <p class="cta__eyebrow">05 / CONTACT</p>
+        <h2 class="cta__title">LET'S<br>GO<br>WILD</h2>
+        <p class="cta__body">あなたの冒険に合ったギアを一緒に選びましょう。まず、話しかけてみてください。</p>
+        <a href="#" class="btn">EXPLORE GEAR <span class="btn__arrow">→</span></a>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="./Form/form.js"></script>
+
+
+
+</body>
+</html>

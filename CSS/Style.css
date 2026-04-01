@@ -1,0 +1,377 @@
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #2F6B3F;
+      --panel-bg:     #F7C85C;
+      --panel-border: rgba(145, 238, 173, 0.879);
+      --text:         #2F6B3F;
+      --text-muted:   #000000;
+      --accent:       #000000;
+      --accent2:      #4a7c59;
+      --radius:       20px;
+      --font-en:      'Bebas Neue', sans-serif;
+      --font-jp:      'Zen Kaku Gothic New', sans-serif;
+    }
+
+    /* bodyは縦スクロールを許可する（GSAPがここに余白を足してスクロール量を作る） */
+    html {
+      /* background: var(--bg); */
+    }
+    body {
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-jp);
+      cursor: none;
+    }
+
+    /* ── 固定背景 ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(180,100,20,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(40,80,50,0.12) 0%, transparent 70%),
+        /* var(--bg); */
+    }
+
+    /* ── カスタムカーソル ── */
+    .cursor {
+      position: fixed;
+      top: 0; left: 0;
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(200,169,110,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+    }
+
+    /* =====================================================
+      【横スクロールの核心】
+
+      .pin-wrapper
+        GSAPがこのDIVをピン留め（固定）する。
+        height: 100vh で画面いっぱいを占有。
+        overflow: hidden でトラックのはみ出しを隠す。
+
+      .page-track
+        GSAPがこのDIVを translateX で左へ動かす。
+        display: flex でパネルを横並びにする。
+    ===================================================== */
+
+    .pin-wrapper {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .page-track {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 80px;
+      gap: 32px;
+      will-change: transform;
+    }
+
+    /* ── 共通パネル ── */
+    .panel {
+      flex-shrink: 0;
+      height: 78vh;
+      border-radius: var(--radius);
+      border: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+      backdrop-filter: blur(12px) saturate(1.4);
+      -webkit-backdrop-filter: blur(12px) saturate(1.4);
+      overflow: hidden;
+      position: relative;
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      /* background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); */
+    }
+
+    /* ── Hero ── */
+    .panel--hero {
+      width: 680px;
+      justify-content: space-between;
+    }
+    .hero__logo { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.35em; color: var(--accent); }
+    .hero__headline { font-family: var(--font-en); font-size: clamp(80px, 10vw, 130px); line-height: 0.9; letter-spacing: -0.01em; }
+    .hero__sub { font-size: 13px; color: var(--text-muted); letter-spacing: 0.15em; line-height: 1.8; margin-bottom: 40px; }
+    .hero__scroll-hint { display: flex; align-items: center; gap: 12px; font-size: 11px; letter-spacing: 0.2em; color: var(--text-muted); }
+    .hero__scroll-hint span { display: block; width: 48px; height: 1px; background: var(--text-muted); }
+
+    /* ── Concept ── */
+    .panel--concept { width: 360px; }
+    .panel__label { font-size: 10px; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 20px; font-family: var(--font-en); }
+    .panel__title { font-family: var(--font-en); font-size: 52px; line-height: 1; letter-spacing: 0.02em; margin-bottom: 24px; }
+    .panel__body { font-size: 14px; line-height: 2; color: var(--text-muted); font-weight: 300; }
+    .divider { width: 32px; height: 1px; background: var(--accent); margin: 24px 0; opacity: 0.6; }
+
+    /* ── Gear ── */
+    .panel--gear { width: 300px; padding: 40px 36px; cursor: pointer; transition: border-color 0.3s; }
+    .panel--gear:hover { border-color: rgba(200,169,110,0.3); }
+    .gear__num { font-family: var(--font-en); font-size: 11px; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: auto; }
+    .gear__icon { font-size: 56px; line-height: 1; margin-bottom: 28px; display: block; filter: grayscale(0.4); }
+    .gear__category { font-size: 10px; letter-spacing: 0.25em; color: var(--accent); margin-bottom: 10px; font-family: var(--font-en); }
+    .gear__name { font-family: var(--font-en); font-size: 32px; line-height: 1.1; margin-bottom: 14px; }
+    .gear__desc { font-size: 12px; line-height: 1.9; color: var(--text-muted); font-weight: 300; }
+    .panel--gear::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 80%, transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .panel--gear:hover::after { opacity: 1; }
+
+    /* ── Night ── */
+    .panel--night { width: 500px; border-color: rgba(74,124,89,0.2); padding: 52px; }
+    .night__tag { display: inline-flex; align-items: center; gap: 8px; font-size: 10px; letter-spacing: 0.2em; color: var(--accent2); border: 1px solid rgba(74,124,89,0.4); padding: 6px 14px; border-radius: 100px; margin-bottom: 10px; font-family: var(--font-en); }
+    .night__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)} }
+    .night__big { font-family: var(--font-en); font-size: 72px; line-height: 0.95; letter-spacing: -0.02em; }
+    .night__big em { font-style: normal; color: var(--accent2); }
+    .night__stat-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .night__stat { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; }
+    .night__stat-num { font-family: var(--font-en); font-size: 36px; color: var(--accent); line-height: 1; }
+    .night__stat-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; margin-top: 4px; }
+
+    /* ── CTA ── */
+    .panel--cta { width: 480px; justify-content: center; align-items: center; text-align: center;  border-color: rgba(200,169,110,0.15); }
+    .cta__eyebrow { font-size: 10px; letter-spacing: 0.3em; color: var(--accent); margin-bottom: 24px; font-family: var(--font-en); }
+    .cta__title { font-family: var(--font-en); font-size: 64px; line-height: 1; margin-bottom: 24px; }
+    .cta__body { font-size: 13px; color: var(--text-muted); line-height: 1.9; font-weight: 300; max-width: 280px; margin: 0 auto 40px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border: 1px solid var(--accent); color: var(--accent); font-family: var(--font-en); font-size: 13px; letter-spacing: 0.2em; border-radius: 100px; text-decoration: none; transition: background 0.3s, color 0.3s; cursor: none; }
+    .btn:hover { background: var(--accent); color: var(--bg); }
+    .btn__arrow { transition: transform 0.3s; }
+    .btn:hover .btn__arrow { transform: translateX(3px); }
+
+    /* ── プログレスバー ── */
+    .progress-bar { position: fixed; bottom: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg, var(--accent2), var(--accent)); z-index: 100; }
+
+    /* ── セクションドット ── */
+    .section-indicator { position: fixed; right: 40px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 10px; }
+    .section-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); transition: background 0.3s, transform 0.3s; }
+    .section-dot.is-active { background: var(--accent); transform: scale(1.6); }
+
+
+
+
+    /* ==========================================================
+  モバイル対応 CSS（横スクロールLP用）
+  
+  考え方：
+  スマホでは横スクロールをやめて「縦スクロール」に切り替える。
+  GSAPのピン留めも解除し、パネルを縦に積み重ねて表示する。
+
+  ブレイクポイント：768px以下をモバイルと定義
+========================================================== */
+
+@media (max-width: 768px) {
+
+  /* ──────────────────────────────────────────
+    【1】GSAPのピン留めを無効化するおまじない
+
+    GSAPはピン留め時に .pin-wrapper に
+    インラインスタイルで height を設定する。
+    !important で強制的に上書きする。
+  ────────────────────────────────────────── */
+  .pin-wrapper {
+    overflow-x: auto;  /*画面中央に表示させる*/
+    height: auto;    /* 固定高さを解除 */
+    overflow: visible; /* はみ出し非表示を解除 */
+    position: static;  /* fixed を解除 */
+  }
+
+  /* ──────────────────────────────────────────
+    【2】トラックを縦並びに切り替える
+
+    横並び（flex-direction: row）から
+    縦並び（flex-direction: column）に変更。
+    横に動かすための transform も無効化。
+  ────────────────────────────────────────── */
+  .page-track {
+    display: flex;
+    flex-direction: column;  /* 縦並びに変更 */
+    align-items: stretch;    /* カードを横いっぱいに広げる */
+    height: auto;
+    padding: 20px 16px;      /* スマホ用の余白 */
+    gap: 16px;
+    transform: none;         /* GSAPのtransformXを解除 */
+    will-change: auto;
+  }
+
+  /* ──────────────────────────────────────────
+    【3】パネルのサイズをスマホ用に調整
+
+    固定幅（width: 300px など）を解除して
+    画面幅いっぱいに広げる。
+    高さも自動にして内容量に合わせる。
+  ────────────────────────────────────────── */
+  .panel {
+    width: 100%;    /* 固定幅を解除して全幅に */
+    height: auto;   /* 固定高さを解除 */
+    min-height: 300px;         /* 最低限の高さは確保 */
+    padding: 36px 28px; /* スマホ用の内側余白 */
+    flex-shrink: unset;
+  }
+
+  /* ──────────────────────────────────────────
+    【4】各パネル個別の調整
+  ────────────────────────────────────────── */
+
+  /* Heroパネル：テキストが大きいのでpaddingを調整 */
+  .panel--hero {
+    min-height: 80vh;           /* ファーストビューとして大きめに */
+    justify-content: space-between;
+  }
+
+  /* ヒーロー見出しをスマホサイズに縮小 */
+  .hero__headline {
+    font-size: 18vw; /* 画面幅に対する比率で自動調整 */
+    line-height: 0.9;
+  }
+
+  /* Heroのスクロールヒント文言を変更 */
+  .hero__scroll-hint::after {
+    content: 'SCROLL DOWN';
+  }
+
+  /* Conceptパネル */
+  .panel--concept {
+    min-height: 320px;
+  }
+
+  .panel__title {
+    font-size: 42px;
+  }
+
+  .panel--gear {
+    display: flex;
+    min-height: 200px;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 24px;
+  }
+
+  .gear__icon {
+    font-size: 48px;
+    margin-bottom: 0;     /* 横並びなのでmargin-bottomを解除 */
+    flex-shrink: 0;
+  }
+
+  .gear__num {
+    display: none; /* スマホでは番号を非表示にしてスッキリ */
+  }
+
+  /* Night feature パネル */
+  .panel--night {
+    min-height: 400px;
+  }
+
+  .night__big {
+    font-size: 52px;
+  }
+
+  .night__stat-grid {
+    grid-template-columns: 1fr 1fr; /* 2列はそのまま維持 */
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  /* CTA パネル */
+  .panel--cta {
+    min-height: 320px;
+  }
+
+  .cta__title {
+    font-size: 48px;
+  }
+
+  /* ──────────────────────────────────────────
+    【5】UIパーツの調整
+  ────────────────────────────────────────── */
+
+  /* プログレスバー：縦スクロールになるので左側に縦型で表示 */
+  .progress-bar {
+    width: 2px;     /* 縦線に変更 */
+    height: 0%;     /* JSで height を更新する必要あり */
+    top: 0;
+    bottom: auto;
+    left: 0;
+    background: linear-gradient(180deg, var(--accent2), var(--accent));
+  }
+
+  /* セクションドット：スマホでは非表示 */
+  .section-indicator {
+    display: none;
+  }
+
+  /* カスタムカーソル：スマホでは不要なので非表示 */
+  .cursor,
+  .cursor-ring {
+    display: none;
+  }
+
+  /* bodyのcursor:noneを解除 */
+  body {
+    cursor: auto;
+  }
+
+}
+
+/* ==========================================================
+  タブレット対応（769px〜1024px）
+  横スクロールは維持しつつ、パネルをやや小さくする
+========================================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .page-track {
+    padding: 0 40px;
+    gap: 20px;
+  }
+
+  /* 全パネルの高さをやや低く */
+  .panel {
+    height: 72vh;
+  }
+
+  /* 各パネルの幅を縮小 */
+  .panel--hero    { width: 520px; }
+  .panel--concept { width: 280px; }
+  .panel--gear    { width: 240px; }
+  .panel--night   { width: 380px; }
+  .panel--cta     { width: 360px; }
+
+  /* フォントサイズ調整 */
+  .hero__headline { font-size: 90px; }
+  .night__big     { font-size: 56px; }
+  .cta__title     { font-size: 52px; }
+}
