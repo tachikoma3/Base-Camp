@@ -16,7 +16,7 @@
 
     /* bodyは縦スクロールを許可する（GSAPがここに余白を足してスクロール量を作る） */
     html {
-      /* background: var(--bg); */
+      background: var(--bg);
     }
     body {
       overflow-x: hidden;
@@ -32,10 +32,10 @@
       inset: 0;
       z-index: 0;
       background:
-    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(180,100,20,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(40,80,50,0.12) 0%, transparent 70%),
-    var(--bg);
-
+        radial-gradient(ellipse 60% 50% at 20% 80%, rgba(180,100,20,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 20%, rgba(40,80,50,0.12) 0%, transparent 70%),
+        var(--bg);
+    }
 
     /* ── カスタムカーソル ── */
     .cursor {
@@ -95,9 +95,8 @@
       border-radius: var(--radius);
       border: 1px solid var(--panel-border);
       background: var(--panel-bg);
-      backdrop-filter: blur(12px) saturate(1.4);
       -webkit-backdrop-filter: blur(12px) saturate(1.4);
-      overflow: hidden;
+      backdrop-filter: blur(12px) saturate(1.4);      overflow: hidden;
       position: relative;
       padding: 52px 48px;
       display: flex;
@@ -203,7 +202,7 @@
     !important で強制的に上書きする。
   ────────────────────────────────────────── */
   .pin-wrapper {
-    /* overflow-x: auto;*/  /*画面中央に表示させる*/ 
+    /*overflow-x: auto;*/  /*画面中央に表示させる*/
     height: auto;    /* 固定高さを解除 */
     overflow: visible; /* はみ出し非表示を解除 */
     position: static;  /* fixed を解除 */
